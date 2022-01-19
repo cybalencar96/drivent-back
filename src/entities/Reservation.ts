@@ -19,6 +19,7 @@ export default class Reservation extends BaseEntity {
   user: User;
 
   @OneToOne(() => Room)
+  @JoinColumn()
   room: Room;
 
   @Column()

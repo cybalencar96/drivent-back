@@ -13,7 +13,7 @@ export default class Room extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: "integer" })
   number: number;
 
   @ManyToOne(() => RoomType)
