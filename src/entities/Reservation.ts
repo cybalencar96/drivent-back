@@ -1,6 +1,6 @@
 import {
   BaseEntity,
-  Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToOne,
@@ -22,6 +22,6 @@ export default class Reservation extends BaseEntity {
   @JoinColumn()
   room: Room;
 
-  @Column()
+  @CreateDateColumn()
   createdAt: Date;
 }

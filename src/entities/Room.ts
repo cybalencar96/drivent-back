@@ -17,7 +17,7 @@ export default class Room extends BaseEntity {
   number: number;
 
   @ManyToOne(() => RoomType)
-  roomType: RoomType;
+  type: RoomType;
 
   @ManyToOne(() => Hotel)
   hotel: Hotel;

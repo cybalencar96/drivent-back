@@ -1,5 +1,6 @@
-import { BaseEntity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity("ticket_types")
 export default class TicketType extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -10,6 +11,6 @@ export default class TicketType extends BaseEntity {
   @Column({ type: "numeric", precision: 8, scale: 2 })
   price: number;
 
-  @Column({ type: "numeric", precision: 8, scale: 2 })
+  @Column({ type: "numeric", precision: 8, scale: 2, nullable: true })
   hotelPrice: number;
 }
