@@ -15,6 +15,6 @@ export default class Ticket extends BaseEntity {
   @ManyToOne(() => TicketType)
   type: TicketType;
 
-  @Column()
+  @Column({ nullable: true })
   paymentDate: Date;
 }
