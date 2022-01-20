@@ -15,7 +15,7 @@ export default class Ticket extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => TicketType)
+  @ManyToOne(() => TicketType, { eager: true })
   type: TicketType;
 
   @OneToOne(() => User)
