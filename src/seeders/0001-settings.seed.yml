@@ -33,4 +33,3 @@ seeds:
       id: 3
       name: "Online"
       price: 100.00
-      hotelPrice: null

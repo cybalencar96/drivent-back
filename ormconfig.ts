@@ -12,4 +12,8 @@ export default {
     migrationsDir: "src/migrations",
     entitiesDir: "dist/entities/*.js",
   },
+  ssl:
+    process.env.NODE_ENV === "production"
+      ? { rejectUnauthorized: false }
+      : false,
 };
