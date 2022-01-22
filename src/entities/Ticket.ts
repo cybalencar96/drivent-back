@@ -25,7 +25,7 @@ export default class Ticket extends BaseEntity {
   @Column({ nullable: true })
   paymentDate: Date;
 
-  static async getTicketInfo(userId: number) {
+  static async findTicketByUserId(userId: number) {
     const ticket = await this.findOne({ user: { id: userId } });
     return ticket;
   }
