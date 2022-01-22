@@ -16,7 +16,7 @@ app.use(express.json());
 app.get("/health", (_req, res) => {
   res.send("OK!");
 });
-app.get("/teste", ticketController.postTicket);
+
 app.use(router);
 app.use(errorHandlingMiddleware);
 
