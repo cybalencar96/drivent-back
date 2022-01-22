@@ -51,8 +51,24 @@ describe("get /ticket", () => {
       .set("Authorization", `Bearer ${session.token}`);
     expect(result.status).toEqual(200);
     expect(result.body.type).toEqual(ticket.type.name);
+    expect(result.body.price.replace(".00", "")).toEqual(
+      ticket.type.price.toString()
+    );
+    expect(result.body.hotelPrice.replace(".00", "")).toEqual(
+      ticket.type.hotelPrice.toString()
+    );
+    expect(result.body.isPaid).toEqual(false);
+  });
+
+  it("returns 200 and an object with isPaid true when ticket is paid", async () => {
+    const ticket = await TicketFactory.createPaidTicket(user);
+    const result = await agent
+      .get("/ticket")
+      .set("Authorization", `Bearer ${session.token}`);
+    expect(result.status).toEqual(200);
+    expect(result.body.type).toEqual(ticket.type.name);
     expect(result.body.price).toEqual(ticket.type.price.toString());
     expect(result.body.hotelPrice).toEqual(ticket.type.hotelPrice.toString());
-    expect(result.body.isPaid).toEqual(false);
+    expect(result.body.isPaid).toEqual(true);
   });
 });
