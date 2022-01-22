@@ -32,7 +32,8 @@ export default class Ticket extends BaseEntity {
     const date = new Date();
     const ticket = this.create({ paymentDate: date, type, user });
     await ticket.save();
-    return ticket;
+
+    return await Ticket.findPaymentByUserId(Number(user));
   }
 
   static async findPaymentByUserId(id: number) {

@@ -13,21 +13,22 @@ export async function signIn(email: string, password: string) {
     throw new UnauthorizedError();
   }
 
-  const enroll = await Enrollment.getByUserIdWithAddress(user.id);
-  const paid = await Ticket.findPaymentByUserId(user.id);
-
   const token = jwt.sign({
     userId: user.id
   }, process.env.JWT_SECRET);
 
   const session = await Session.createNew(user.id, token);
 
+  const enroll = await Enrollment.find({ userId: user.id });
+
+  const paid = await Ticket.findPaymentByUserId(user.id);
+
   return {
     user: {
       id: user.id,
       email: user.email,
-      enrolled: !!enroll,
-      paid: paid
+      paid: paid,
+      enrolled: !!enroll[0],
     },
 
     token,
