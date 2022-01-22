@@ -15,7 +15,7 @@ export default class Setting extends BaseEntity {
     const settings = await this.find();
 
     const getValue = (name: string) =>
-      settings.find((s) => s.name === name).value;
+      settings.find((s) => s.name === name)?.value;
 
     return {
       startDate: new Date(getValue("start_date")),

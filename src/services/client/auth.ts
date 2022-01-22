@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import UnauthorizedError from "@/errors/Unauthorized";
 import User from "@/entities/User";
 import Session from "@/entities/Session";
+import Enrollment from "@/entities/Enrollment";
 
 export async function signIn(email: string, password: string) {
   const user = await User.findByEmailAndPassword(email, password);
@@ -10,6 +11,8 @@ export async function signIn(email: string, password: string) {
   if (!user) {
     throw new UnauthorizedError();
   }
+
+  const enroll = await Enrollment.getByUserIdWithAddress(user.id);
 
   const token = jwt.sign({
     userId: user.id
@@ -20,9 +23,10 @@ export async function signIn(email: string, password: string) {
   return {
     user: {
       id: user.id,
-      email: user.email
+      email: user.email,
+      enrolled: !!enroll
     },
 
-    token
+    token,
   };
 }

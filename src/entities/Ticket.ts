@@ -24,4 +24,21 @@ export default class Ticket extends BaseEntity {
 
   @Column({ nullable: true })
   paymentDate: Date;
+
+  static async createNew(body: Ticket) {
+    const { type, user } = body;
+    const date = new Date();
+    const ticket = this.create({ paymentDate: date, type, user });
+    await ticket.save();
+    return ticket;
+  }
+
+  getTicket() {
+    return ({
+      id: this.id,
+      type: this.type,
+      user: this.user.id,
+      paymentDate: this.paymentDate,
+    });
+  }
 }
