@@ -4,17 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test npm run eslint:fix && npx jest -i",
+    "test": "npm run eslint:fix && npx jest -i",
+    "test:watch": "npm run eslint:fix && npx jest -i --watch",
     "build": "NODE_ENV=production rm -rf ./dist && npm run eslint:fix && npx ttsc -P ./tsconfig.json --outDir dist && babel dist -d dist",
     "start": "NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED=0 node dist/server.js",
     "dev": "NODE_ENV=development npx nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node -r tsconfig-paths/register --files src/server.ts\"",
-    "typeorm": "ts-node ./node_modules/typeorm/cli",
-    "typeorm:test": "ts-node ./node_modules/typeorm/cli -c test",
+    "typeorm": "NODE_ENV=development ts-node ./node_modules/typeorm/cli",
+    "typeorm:test": "ts-node ./node_modules/typeorm/cli",
     "migration:generate": "npm run build && npm run typeorm migration:generate -- -n",
     "migration:run": "npm run build && npm run typeorm migration:run && npm run typeorm:test migration:run",
+    "migration:run-production": "NODE_ENV=production ts-node ./node_modules/typeorm/cli migration:run",
     "eslint": "npx eslint src",
     "eslint:fix": "npx eslint --fix src",
-    "seed": "ts-node -r tsconfig-paths/register ./src/seeders",
+    "seed": "NODE_ENV=development ts-node -r tsconfig-paths/register ./src/seeders",
+    "seed:production": "NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED=0 ts-node -r tsconfig-paths/register ./src/seeders",
     "prepare": "husky install"
   },
   "keywords": [],
@@ -52,6 +55,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.3",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dayjs": "^1.10.6",
@@ -67,7 +71,7 @@
     "readline-sync": "^1.4.10",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.34",
-    "uuid": "^8.3.2",
-    "typescript-transform-paths": "^3.3.1"
+    "typescript-transform-paths": "^3.3.1",
+    "uuid": "^8.3.2"
   }
 }
