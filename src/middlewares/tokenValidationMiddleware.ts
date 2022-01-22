@@ -12,7 +12,6 @@ interface JwtPayload {
 export default async function authenticationMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
     const authHeader = req.header("Authorization");
-
     const token = authHeader?.replace("Bearer ", "");
     if (!token) {
       throw new UnauthorizedError();
