@@ -33,18 +33,18 @@ describe("get /ticket", () => {
     ticketType = await TicketTypeFactory.createTicketType();
   });
 
-  it("returns 200 and an object with null properties and false when ticket doesn't exist", async () => {
+  it("returns 200 and an object with undefined properties and false when ticket doesn't exist", async () => {
     const result = await agent
       .get("/ticket")
       .set("Authorization", `Bearer ${session.token}`);
     expect(result.status).toEqual(200);
-    expect(result.body.type).toEqual(null);
-    expect(result.body.price).toEqual(null);
-    expect(result.body.hotelPrice).toEqual(null);
+    expect(result.body.type).toEqual(undefined);
+    expect(result.body.price).toEqual(undefined);
+    expect(result.body.hotelPrice).toEqual(undefined);
     expect(result.body.isPaid).toEqual(false);
   });
 
-  it("returns 200 and an object with not null properties and false when ticket is unpaid", async () => {
+  it("returns 200 and an object with not undefined properties and false when ticket is unpaid", async () => {
     const ticket = await TicketFactory.createUnpaidTicket(user, ticketType);
     const result = await agent
       .get("/ticket")
