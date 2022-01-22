@@ -15,9 +15,10 @@ export default class Ticket extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => TicketType, {
-    eager: true
-  })
+  // @ManyToOne(() => TicketType, {
+  //   eager: true
+  // })
+  @ManyToOne(() => TicketType, { eager: true })
   type: TicketType;
 
   @OneToOne(() => User)
@@ -33,20 +34,11 @@ export default class Ticket extends BaseEntity {
     const ticket = this.create({ paymentDate: date, type, user });
     await ticket.save();
 
-    return await Ticket.findPaymentByUserId(Number(user));
+    return await Ticket.findTicketByUserId(Number(user));
   }
 
-  static async findPaymentByUserId(id: number) {
-    const payment = await this.findOne({ where: { user: id } });
-    return payment;
-  }
-
-  getTicket() {
-    return ({
-      id: this.id,
-      type: this.type.name,
-      user: this.user.id,
-      paymentDate: this.paymentDate,
-    });
+  static async findTicketByUserId(userId: number) {
+    const ticket = await this.findOne({ user: { id: userId } });
+    return ticket;
   }
 }

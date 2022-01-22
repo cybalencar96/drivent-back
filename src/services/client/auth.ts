@@ -21,7 +21,7 @@ export async function signIn(email: string, password: string) {
 
   const enroll = await Enrollment.find({ userId: user.id });
 
-  const paid = await Ticket.findPaymentByUserId(user.id);
+  const paid = await Ticket.findTicketByUserId(user.id);
 
   return {
     user: {

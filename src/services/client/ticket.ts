@@ -6,12 +6,17 @@ export async function postTicketPayment(body: Ticket) {
   if (!user) {
     return false;
   }
-  const conflict = await Ticket.findPaymentByUserId(Number(body.user));
+  const conflict = await Ticket.findTicketByUserId(Number(body.user));
 
   if (conflict) {
     return null;
   }
 
   const ticket = await Ticket.createNew(body);
+
+  return ticket;
+}
+export async function getTicketInfo(userId: number) {
+  const ticket = await Ticket.findTicketByUserId(userId);
   return ticket;
 }
