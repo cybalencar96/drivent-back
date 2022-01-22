@@ -4,7 +4,7 @@ import express from "express";
 import "express-async-errors";
 import cors from "cors";
 import "reflect-metadata";
-
+import * as ticketController from "./controllers/client/ticket";
 import connectDatabase from "@/database";
 import errorHandlingMiddleware from "@/middlewares/errorHandlingMiddleware";
 import router from "@/routers";

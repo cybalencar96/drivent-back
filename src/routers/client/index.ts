@@ -3,6 +3,7 @@ import { Router } from "express";
 import eventRouter from "@/routers/client/event";
 import userRouter from "@/routers/client/user";
 import authRouter from "@/routers/client/auth";
+import ticketRouter from "@/routers/client/ticket";
 import enrollmentRouter from "@/routers/client/enrollment";
 import ticketRoute from "@/routers/client/ticket";
 
