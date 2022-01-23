@@ -28,4 +28,9 @@ export default class Reservation extends BaseEntity {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  static async getReservationsByRoomId(roomId: number) {
+    const reservations = await this.find({ id: roomId });
+    return reservations;
+  }
 }

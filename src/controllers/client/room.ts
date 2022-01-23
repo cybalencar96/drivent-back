@@ -11,12 +11,19 @@ async function getRoomsByHotelId(req: Request, res: Response) {
 
 async function getAvailableRooms(req: Request, res: Response) {
   const { hotelId } = req.params;
-  
+
   const rooms = await service.getOnlyAvailableRoomsFromHotel(+hotelId);
   return res.status(httpStatus.OK).send(rooms);
+}
+
+async function getRoomDetails(req: Request, res: Response) {
+  const { hotelId } = req.params;
+  const rooms = await service.getRoomDetailsFromHotel(+hotelId);
+  return res.send(rooms);
 }
 
 export default {
   getRoomsByHotelId,
   getAvailableRooms,
+  getRoomDetails,
 };
