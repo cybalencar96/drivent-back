@@ -5,7 +5,7 @@ import {
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
-  Column,
+  ManyToOne,
 } from "typeorm";
 import Room from "./Room";
 import User from "./User";
@@ -15,17 +15,26 @@ export default class Reservation extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "integer", name: "roomId" })
-  roomId: number;
-
   @OneToOne(() => User)
   @JoinColumn()
   user: User;
 
-  @OneToOne(() => Room)
-  @JoinColumn()
+  @ManyToOne(() => Room)
   room: Room;
 
   @CreateDateColumn()
   createdAt: Date;
+
+  static async getReservationsByRoomId(roomId: number) {
+    const reservations = await this.find({ room: { id: roomId } });
+    return reservations;
+  }
+
+  getReservation() {
+    return {
+      id: this.id,
+      room: this.room,
+      createdAt: this.createdAt,
+    };
+  }
 }
