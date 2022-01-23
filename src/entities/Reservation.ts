@@ -5,6 +5,7 @@ import {
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
+  Column,
 } from "typeorm";
 import Room from "./Room";
 import User from "./User";
@@ -13,6 +14,9 @@ import User from "./User";
 export default class Reservation extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ type: "integer", name: "roomId" })
+  roomId: number;
 
   @OneToOne(() => User)
   @JoinColumn()
