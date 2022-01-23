@@ -5,7 +5,6 @@ import {
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
-  Column,
   ManyToOne,
 } from "typeorm";
 import Room from "./Room";
