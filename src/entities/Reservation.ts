@@ -6,6 +6,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
   Column,
+  ManyToOne,
 } from "typeorm";
 import Room from "./Room";
 import User from "./User";
@@ -22,8 +23,7 @@ export default class Reservation extends BaseEntity {
   @JoinColumn()
   user: User;
 
-  @OneToOne(() => Room)
-  @JoinColumn()
+  @ManyToOne(() => Room)
   room: Room;
 
   @CreateDateColumn()
