@@ -33,4 +33,9 @@ export default class Room extends BaseEntity {
       occupiedBeds: reservations.length,
     };
   }
+
+  static async getRoomById(roomId: number) {
+    const room = this.findOne({ id: roomId });
+    return room;
+  }
 }

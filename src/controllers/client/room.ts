@@ -22,8 +22,15 @@ async function getRoomDetails(req: Request, res: Response) {
   return res.send(rooms);
 }
 
+async function reserveRoom(req: Request, res: Response) {
+  const { roomId } = req.params;
+  const reservation = await service.reserveRoom(req.user.id, +roomId);
+  return res.send(reservation);
+}
+
 export default {
   getRoomsByHotelId,
   getAvailableRooms,
   getRoomDetails,
+  reserveRoom,
 };
