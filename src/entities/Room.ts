@@ -28,6 +28,7 @@ export default class Room extends BaseEntity {
   async getRoomInfo() {
     const reservations = await Reservation.getReservationsByRoomId(this.id);
     return {
+      id: this.id,
       number: this.number,
       totalBeds: roomTypes[this.type.name],
       occupiedBeds: reservations.length,
