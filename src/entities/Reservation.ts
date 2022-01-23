@@ -30,7 +30,7 @@ export default class Reservation extends BaseEntity {
   createdAt: Date;
 
   static async getReservationsByRoomId(roomId: number) {
-    const reservations = await this.find({ id: roomId });
+    const reservations = await this.find({ room: { id: roomId } });
     return reservations;
   }
 }
