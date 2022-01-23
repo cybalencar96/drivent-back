@@ -7,29 +7,17 @@ import User from "@/entities/User";
 
 async function getRoomsFromHotel(hotelId: number) {
   return await Room.find({
-    where: {
-      hotelId,
-    },
+    hotel: { id: hotelId },
   });
 }
 
 async function getOnlyAvailableRoomsFromHotel(hotelId: number) {
-  const allRooms = await Room.find({
-    where: {
-      hotelId,
-    },
-  });
-
-  const whereArray = allRooms.map((room) => ({ roomId: room.id }));
-  const reservationsFound = await Reservation.find({ where: whereArray });
-  return allRooms.filter(
-    (room) =>
-      !reservationsFound.find((reservation) => reservation.roomId === room.id)
-  );
+  const allRooms = await getRoomDetailsFromHotel(hotelId);
+  return allRooms.reduce((acc, el) => acc + el.totalBeds - el.occupiedBeds, 0);
 }
 
 async function getRoomDetailsFromHotel(hotelId: number) {
-  const rooms = await Room.find({ where: { hotelId } });
+  const rooms = await Room.find({ hotel: { id: hotelId } });
   return Promise.all(rooms.map((room) => room.getRoomInfo()));
 }
 

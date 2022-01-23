@@ -16,9 +16,6 @@ export default class Reservation extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "integer", name: "roomId" })
-  roomId: number;
-
   @OneToOne(() => User)
   @JoinColumn()
   user: User;
