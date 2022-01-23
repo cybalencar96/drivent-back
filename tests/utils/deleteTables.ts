@@ -37,4 +37,5 @@ export default async function deleteTables() {
   await getConnection().createQueryBuilder().delete().from(Room).execute();
   await getConnection().createQueryBuilder().delete().from(RoomType).execute();
   await getConnection().createQueryBuilder().delete().from(Hotel).execute();
+  await getConnection().query("alter sequence ticket_types_id_seq restart with 1");
 }

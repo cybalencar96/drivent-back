@@ -68,3 +68,26 @@ describe("get /ticket", () => {
     expect(result.body.isPaid).toEqual(true);
   });
 });
+
+describe("post ticket/payment", () => {
+  let user: User;
+  let session: Session;
+  let ticketType: TicketType;
+
+  beforeAll(async () => {
+    user = await UserFactory.createUser();
+    session = await SessionFactory.createSession(user.id);
+    ticketType = await TicketTypeFactory.createTicketType();
+  });
+
+  it("returns 204 when ticket doesn't exist", async () => {
+    console.log(ticketType);
+    const result = await agent
+      .post("/ticket/Payment")
+      .send({ body: { user: user.id, type: ticketType.id } })
+      .set("Authorization", `Bearer ${session.token}`);
+    console.log(result.body);
+    console.log(result.status);
+    expect(result.status).toEqual(400);
+  });
+});
