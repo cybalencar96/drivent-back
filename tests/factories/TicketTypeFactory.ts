@@ -5,7 +5,6 @@ import { TicketType } from "../../src/entities";
 export default abstract class TicketTypeFactory {
   static async createTicketType() {
     const ticket = {
-      id: 0,
       name: faker.random.word(),
       price: parseFloat(faker.commerce.price()),
       hotelPrice: parseFloat(faker.commerce.price()),
