@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
-
-dotenv.config();
+import "./src/setup";
 
 export default {
   type: "postgres",

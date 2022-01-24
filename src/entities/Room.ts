@@ -5,8 +5,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import Hotel from "./Hotel";
-import RoomType from "./RoomType";
+import { Reservation, Hotel, RoomType } from ".";
+import roomTypes from "../enums/roomTypes";
 
 @Entity("rooms")
 export default class Room extends BaseEntity {
@@ -21,4 +21,19 @@ export default class Room extends BaseEntity {
 
   @ManyToOne(() => Hotel, { eager: true })
   hotel: Hotel;
+
+  async getRoomInfo() {
+    const reservations = await Reservation.getReservationsByRoomId(this.id);
+    return {
+      id: this.id,
+      number: this.number,
+      totalBeds: roomTypes[this.type.name],
+      occupiedBeds: reservations.length,
+    };
+  }
+
+  static async getRoomById(roomId: number) {
+    const room = this.findOne({ id: roomId });
+    return room;
+  }
 }
