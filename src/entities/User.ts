@@ -33,8 +33,10 @@ export default class User extends BaseEntity {
   static async validateDuplicateEmail(email: string) {
     const user = await this.findOne({ email });
 
-    if(user) {
+    if (user) {
+      console.log("aqui");
       throw new EmailNotAvailableError(email);
+      return;
     }
   }
 
