@@ -27,7 +27,18 @@ export async function signIn(email: string, password: string) {
 
   const paid = await Ticket.findTicketByUserId(user.id);
 
-  const reservation = await Reservation.findOne({ user: { id: user.id } });
+  const reservation = await Reservation.findOne({
+    where: { user: { id: user.id } },
+    relations: ["room"],
+  });
+
+  const reservationsAmount = await Reservation.find({
+    where: {
+      room: { id: reservation.room.id },
+    },
+  });
+
+  const reservationObject = { ...reservation, amount: reservationsAmount.length };
 
   return {
     user: {
@@ -35,7 +46,7 @@ export async function signIn(email: string, password: string) {
       email: user.email,
       paid: paid,
       enrolled: !!enroll[0],
-      reservation,
+      reservation: reservationObject,
     },
 
     token,

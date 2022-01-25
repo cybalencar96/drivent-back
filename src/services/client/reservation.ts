@@ -14,6 +14,17 @@ async function getUserReservations(userId: number) {
   return sanitizedReservationsFound;
 }
 
+async function getRoomReservationsAmount(roomId: number) {
+  const reservationsFound = await Reservation.find({
+    where: {
+      room: { id: roomId },
+    },
+  });
+
+  return { ammount: reservationsFound.length };
+}
+
 export default {
   getUserReservations,
+  getRoomReservationsAmount,
 };

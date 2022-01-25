@@ -9,6 +9,13 @@ async function getReservationsByUserId(req: Request, res: Response) {
   return res.status(httpStatus.OK).send(reservationsFound);
 }
 
+async function getReservationsAmount(req: Request, res: Response) {
+  const { roomId } = req.params;
+  const reservationsFound = await service.getRoomReservationsAmount(+roomId);
+  return res.status(httpStatus.OK).send(reservationsFound);
+}
+
 export default {
+  getReservationsAmount,
   getReservationsByUserId,
 };
