@@ -6,12 +6,13 @@ import Session from "@/entities/Session";
 import Enrollment from "@/entities/Enrollment";
 import Ticket from "@/entities/Ticket";
 import { Reservation } from "@/entities";
+import FailedSignInError from "@/errors/FailedSignInError";
 
 export async function signIn(email: string, password: string) {
   const user = await User.findByEmailAndPassword(email, password);
 
   if (!user) {
-    throw new UnauthorizedError();
+    throw new FailedSignInError();
   }
 
   const token = jwt.sign(
