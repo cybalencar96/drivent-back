@@ -7,6 +7,8 @@ import InvalidDataError from "@/errors/InvalidData";
 import ConflictError from "@/errors/ConflictError";
 import UnauthorizedError from "@/errors/Unauthorized";
 import NotFoundError from "@/errors/NotFoundError";
+import FailedSignInError from "@/errors/FailedSignInError";
+import EmailNotAvailableError from "@/errors/EmailNotAvailable";
 
 /* eslint-disable-next-line */
 export default function errorHandlingMiddleware (err: Error, _req: Request, res: Response, _next: NextFunction) {
@@ -34,7 +36,7 @@ export default function errorHandlingMiddleware (err: Error, _req: Request, res:
 
   if (err instanceof ConflictError) {
     return res.status(httpStatus.CONFLICT).send({
-      message: err.message
+      message: err.message,
     });
   }
 
@@ -47,6 +49,20 @@ export default function errorHandlingMiddleware (err: Error, _req: Request, res:
   if (err instanceof NotFoundError) {
     return res.status(httpStatus.NOT_FOUND).send({
       message: err.message
+    });
+  }
+
+  if (err instanceof FailedSignInError) {
+    return res.status(httpStatus.UNAUTHORIZED).send({
+      message: err.message,
+      details: err.details
+    });
+  }
+
+  if (err instanceof EmailNotAvailableError) {
+    return res.status(httpStatus.BAD_REQUEST).send({
+      message: err.message,
+      details: err.details
     });
   }
 
