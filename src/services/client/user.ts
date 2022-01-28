@@ -20,7 +20,7 @@ export async function createNewUser(email: string, password: string) {
 
 export async function signToEvent(userId: number, eventId: number) {
   const [userFound, eventFound] = await Promise.all([
-    User.findOne({ id: userId }),
+    User.findOne({ where: { id: userId }, relations: ["events"] }),
     Event.findOne({ id: eventId })]);
 
   if(!userFound || !eventFound) throw new InvalidDataError("Invalid data provided", []);
@@ -34,7 +34,7 @@ export async function signToEvent(userId: number, eventId: number) {
 }
 
 export async function listUserEvents(userId: number) {
-  const userFound = await User.findOne({ id: userId });
+  const userFound = await User.findOne({ where: { id: userId }, relations: ["events"] });
   if(!userFound) throw new InvalidDataError("Data provided does not match any", []);
 
   return userFound.events;
