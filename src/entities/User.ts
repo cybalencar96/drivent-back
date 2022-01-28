@@ -17,7 +17,9 @@ export default class User extends BaseEntity {
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt: Date;
 
-  @ManyToMany(() => Event, event => event.id)
+  @ManyToMany(() => Event, event => event.id, {
+    cascade: true,
+  })
   @JoinTable({
     name: "users_events",
     joinColumn: {

@@ -32,11 +32,14 @@ export async function signIn(email: string, password: string) {
     relations: ["room"],
   });
 
-  const reservationsAmount = await Reservation.find({
-    where: {
-      room: { id: reservation.room.id },
-    },
-  });
+  let reservationsAmount = [];
+  if (reservation) {
+    reservationsAmount = await Reservation.find({
+      where: {
+        room: { id: reservation.room.id },
+      },
+    });
+  }
 
   const reservationObject = { ...reservation, amount: reservationsAmount.length };
 

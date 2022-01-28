@@ -1,5 +1,15 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
-import { User } from ".";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
+import User from "./User";
+import Location from "./Location";
 
 @Entity("events")
 export default class Event extends BaseEntity {
@@ -27,5 +37,9 @@ export default class Event extends BaseEntity {
       referencedColumnName: "id",
     },
   })
-  users: User[]
+  users: User[];
+
+  @OneToOne(() => Location, { eager: true })
+  @JoinColumn()
+    location: Location;
 }
