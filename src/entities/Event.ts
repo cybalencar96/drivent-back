@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
-  OneToOne,
+  ManyToOne,
   JoinColumn,
 } from "typeorm";
 import User from "./User";
@@ -42,7 +42,7 @@ export default class Event extends BaseEntity {
   })
   users: User[];
 
-  @OneToOne(() => Location, { eager: true })
+  @ManyToOne(() => Location, { eager: true })
   @JoinColumn()
     location: Location;
 }
