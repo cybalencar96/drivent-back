@@ -10,6 +10,12 @@ export async function signUp(req: Request, res: Response) {
 
 export async function listEvents(req: Request, res: Response) {
   const { userId } = req.params;
+
+  if (userId === "0") {
+    const events = await service.listAllEvents();
+    return res.status(httpStatus.OK).send(events);
+  }
+
   const events = await service.listUserEvents(+userId);
   return res.status(httpStatus.OK).send(events);
 }

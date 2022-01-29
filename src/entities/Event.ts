@@ -25,6 +25,9 @@ export default class Event extends BaseEntity {
   @Column()
   endDate: Date;
 
+  @Column()
+  vacancies: number;
+
   @ManyToMany(() => User, user => user.id)
   @JoinTable({
     name: "users_events",

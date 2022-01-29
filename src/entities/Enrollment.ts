@@ -3,7 +3,7 @@ import EnrollmentData from "@/interfaces/enrollment";
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
 import Address from "@/entities/Address";
 
-@Entity("enrollments")
+@Entity({ name: "enrollments" })
 export default class Enrollment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
