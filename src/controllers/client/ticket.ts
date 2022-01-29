@@ -6,6 +6,9 @@ import httpStatus from "http-status";
 export async function postTicketPayment(req: Request, res: Response) {
   const { body } = req.body;
 
+  if (!body) {
+    return res.status(httpStatus.BAD_REQUEST).send({ message: "Invalid body" });
+  }
   const payment = await ticketService.postTicketPayment(body);
 
   if (payment === null) {
