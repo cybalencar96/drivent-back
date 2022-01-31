@@ -48,7 +48,7 @@ export default class Enrollment extends BaseEntity {
   static async createOrUpdate(data: EnrollmentData) {
     let enrollment = await this.findOne({ where: { cpf: data.cpf } });
 
-    if(enrollment && enrollment.userId !== data.userId) {
+    if (enrollment && enrollment.userId !== data.userId) {
       throw new CpfNotAvailableError(data.cpf);
     }
 
