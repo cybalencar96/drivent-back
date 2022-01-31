@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run eslint:fix && npx jest -i",
+    "test": "npm run eslint:fix && npx jest -i --runInBand",
     "test:watch": "npm run eslint:fix && npx jest -i --watch",
     "build": "NODE_ENV=production rm -rf ./dist && npm run eslint:fix && npx ttsc -P ./tsconfig.json --outDir dist && babel dist -d dist",
     "start": "NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED=0 node dist/server.js",

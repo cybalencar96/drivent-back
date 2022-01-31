@@ -26,7 +26,7 @@ async function reserveRoom(userId: number, roomId: number) {
   const userReservation = await Reservation.findOne({ user });
 
   if (userReservation) {
-    throw new ExistingReservationError();
+    await Reservation.delete({ user });
   }
 
   const room = await Room.getRoomById(roomId);
