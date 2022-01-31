@@ -19,7 +19,7 @@ export default class Room extends BaseEntity {
   @ManyToOne(() => RoomType, { eager: true })
   type: RoomType;
 
-  @ManyToOne(() => Hotel)
+  @ManyToOne(() => Hotel, { eager: true })
   hotel: Hotel;
 
   async getRoomInfo() {

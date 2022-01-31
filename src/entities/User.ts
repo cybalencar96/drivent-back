@@ -1,6 +1,7 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm";
 import bcrypt from "bcrypt";
 import EmailNotAvailableError from "@/errors/EmailNotAvailable";
+import Event from "./Event";
 
 @Entity("users")
 export default class User extends BaseEntity {
@@ -15,6 +16,22 @@ export default class User extends BaseEntity {
 
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt: Date;
+
+  @ManyToMany(() => Event, event => event.id, {
+    cascade: true,
+  })
+  @JoinTable({
+    name: "users_events",
+    joinColumn: {
+      name: "userId",
+      referencedColumnName: "id",
+    },
+    inverseJoinColumn: {
+      name: "eventId",
+      referencedColumnName: "id",
+    },
+  })
+  events: Event[]
 
   static async createNew(email: string, password: string) {
     await this.validateDuplicateEmail(email);
@@ -33,8 +50,10 @@ export default class User extends BaseEntity {
   static async validateDuplicateEmail(email: string) {
     const user = await this.findOne({ email });
 
-    if(user) {
+    if (user) {
+      console.log("aqui");
       throw new EmailNotAvailableError(email);
+      return;
     }
   }
 
