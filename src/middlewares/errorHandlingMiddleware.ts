@@ -9,6 +9,7 @@ import UnauthorizedError from "@/errors/Unauthorized";
 import NotFoundError from "@/errors/NotFoundError";
 import FailedSignInError from "@/errors/FailedSignInError";
 import EmailNotAvailableError from "@/errors/EmailNotAvailable";
+import CpfNotAvailableError from "@/errors/CpfNotAvailable";
 
 /* eslint-disable-next-line */
 export default function errorHandlingMiddleware (err: Error, _req: Request, res: Response, _next: NextFunction) {
@@ -61,6 +62,13 @@ export default function errorHandlingMiddleware (err: Error, _req: Request, res:
 
   if (err instanceof EmailNotAvailableError) {
     return res.status(httpStatus.BAD_REQUEST).send({
+      message: err.message,
+      details: err.details
+    });
+  }
+
+  if (err instanceof CpfNotAvailableError) {
+    return res.status(httpStatus.CONFLICT).send({
       message: err.message,
       details: err.details
     });
