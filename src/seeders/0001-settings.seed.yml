@@ -21,15 +21,91 @@ seeds:
       value: "https://driveneducation.com.br/wp-content/uploads/2021/07/logo-footer.svg"
   - TicketType:
       id: 1
-      name: "Presencial"
+      name: "Presencial + Com hotel"
       price: 250.00
       hotelPrice: 350.00
   - TicketType:
       id: 2
-      name: "Presencial"
+      name: "Presencial + Sem hotel"
       price: 250.00
       hotelPrice: 0
   - TicketType:
       id: 3
       name: "Online"
       price: 100.00
+    seeds:
+  - RoomType:
+      id: 1
+      name: "Single"
+  - RoomType:
+      id: 2
+      name: "Double"
+  - RoomType:
+      id: 3
+      name: "Triple"
+  - Hotel:
+      id: 1
+      name: "Driven Resort"
+      imageUrl: "https://media-cdn.tripadvisor.com/media/photo-s/05/f1/3c/70/portobacana-hotel.jpg"
+  - Hotel:
+      id: 2
+      name: "Driven Palace"
+      imageUrl: "https://kongres-magazine.eu/wp-content/uploads/2014/04/442864_a_3613011.jpg"
+  - Hotel:
+      id: 3
+      name: "Driven World"
+      imageUrl: "https://hotelbirksmontreal.com/wp-content/uploads/2020/03/summerfacade.jpeg"
+  - Room:
+      id: 1
+      number: 101
+      typeId: 1
+      hotelId: 1
+  - Room:
+      id: 2
+      number: 102
+      typeId: 2
+      hotelId: 1
+  - Room:
+      id: 3
+      number: 103
+      typeId: 3
+      hotelId: 1
+  - Room:
+      id: 4
+      number: 101
+      typeId: 1
+      hotelId: 2
+  - Room:
+      id: 5
+      number: 102
+      typeId: 2
+      hotelId: 2
+  - Room:
+      id: 6
+      number: 103
+      typeId: 3
+      hotelId: 2
+  - Room:
+      id: 7
+      number: 101
+      typeId: 1
+      hotelId: 3
+  - Room:
+      id: 8
+      number: 102
+      typeId: 2
+      hotelId: 3
+  - Room:
+      id: 9
+      number: 103
+      typeId: 3
+      hotelId: 3
+  - Location:
+      id: 1
+      name: "Auditório Principal"
+  - Location:
+      id: 2
+      name: "Auditório Lateral"
+  - Location:
+      id: 3
+      name: "Sala de Workshop"
