@@ -44,6 +44,6 @@ export async function listUserEvents(userId: number) {
 }
 
 export async function listAllEvents() {
-  const events = await Event.find();
-  return events;
+  const events = await Event.find({ relations: ["users"] });
+  return events.map(event => ({ ...event, users: event.users.length }));
 }
