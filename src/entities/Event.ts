@@ -45,4 +45,14 @@ export default class Event extends BaseEntity {
   @ManyToOne(() => Location, { eager: true })
   @JoinColumn()
     location: Location;
+
+  structureToClient() {
+    return {
+      id: this.id,
+      name: this.name,
+      location: this.location,
+      startDate: this.startDate,
+      endDate: this.endDate,
+    };
+  }
 }
