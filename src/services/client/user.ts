@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
 import User from "@/entities/User";
 import Event from "@/entities/Event";
-
 import CannotEnrollBeforeStartDateError from "@/errors/CannotEnrollBeforeStartDate";
 import Setting from "@/entities/Setting";
 import InvalidDataError from "@/errors/InvalidData";
 import ConflictError from "@/errors/ConflictError";
 import NumberOfReservationsExceededError from "@/errors/NumberOfReservationsExceeded";
+import { dateOperator } from "@/adapters/DateOperatorAdapter";
 
 export async function createNewUser(email: string, password: string) {
   const settings = await Setting.getEventSettings();
@@ -29,6 +29,21 @@ export async function signToEvent(userId: number, eventId: number) {
   
   for (const event of userFound.events) {
     if (event.id === eventId) throw new ConflictError("Already registered");
+
+    if (
+      dateOperator.isAfterOrSame(eventFound.startDate, event.startDate) &&
+      dateOperator.isBeforeOrSame(eventFound.startDate, event.endDate) ||
+      dateOperator.isAfterOrSame(eventFound.endDate, event.startDate) &&
+      dateOperator.isBeforeOrSame(eventFound.endDate, event.endDate) ||
+      dateOperator.isAfterOrSame(eventFound.endDate, event.endDate) &&
+      dateOperator.isBeforeOrSame(eventFound.startDate, event.startDate)
+    ) {
+      throw new ConflictError(`
+        Time Overlap Error:
+        You are registered at event ${event.name}
+        that overlaps time with the event you're trying to sign  
+      `);
+    }
   }
 
   if (eventFound.users.length >= eventFound.vacancies) throw new NumberOfReservationsExceededError();
