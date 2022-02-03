@@ -22,18 +22,40 @@ export async function createNewUser(email: string, password: string) {
 export async function signToEvent(userId: number, eventId: number) {
   const [userFound, eventFound] = await Promise.all([
     User.findOne({ where: { id: userId }, relations: ["events"] }),
-    Event.findOne({ where: { id: eventId }, relations: ["users"] })]);
+    Event.findOne({ where: { id: eventId }, relations: ["users"] })
+  ]);
 
   if(!userFound || !eventFound) throw new InvalidDataError("Invalid data provided", []);
+  
   for (const event of userFound.events) {
     if (event.id === eventId) throw new ConflictError("Already registered");
+
+    if (
+      dateOperator.isAfterOrSame(eventFound.startDate, event.startDate) &&
+      dateOperator.isBeforeOrSame(eventFound.startDate, event.endDate) ||
+      dateOperator.isAfterOrSame(eventFound.endDate, event.startDate) &&
+      dateOperator.isBeforeOrSame(eventFound.endDate, event.endDate) ||
+      dateOperator.isAfterOrSame(eventFound.endDate, event.endDate) &&
+      dateOperator.isBeforeOrSame(eventFound.startDate, event.startDate)
+    ) {
+      throw new ConflictError(`
+        Time Overlap Error:
+        You are registered at event ${event.name}
+        that overlaps time with the event you're trying to sign  
+      `);
+    }
   }
 
   if (eventFound.users.length >= eventFound.vacancies) throw new NumberOfReservationsExceededError();
 
   userFound.events.push(eventFound);
   User.save(userFound);
-  return userFound;
+
+  const newEventSigned = userFound.events[userFound.events.length - 1];
+  return {
+    user: userFound.structureToClient(),
+    event: newEventSigned.structureToClient(),
+  };
 }
 
 export async function listUserEvents(userId: number) {
