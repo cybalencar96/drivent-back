@@ -43,7 +43,7 @@ export async function signIn(email: string, password: string) {
   }
 
   const reservationObject = { ...reservation, amount: reservationsAmount.length };
-
+  
   return {
     user: {
       ...user.structureToClient(),

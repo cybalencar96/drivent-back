@@ -19,6 +19,7 @@ export default class User extends BaseEntity {
 
   @ManyToMany(() => Event, event => event.id, {
     cascade: true,
+    eager: true,
   })
   @JoinTable({
     name: "users_events",
