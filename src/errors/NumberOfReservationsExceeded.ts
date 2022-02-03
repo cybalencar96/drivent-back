@@ -2,7 +2,7 @@ import ConflictError from "./ConflictError";
 
 export default class NumberOfReservationsExceededError extends ConflictError {
   constructor() {
-    super("this room doesn't have free beds anymore");
+    super("este quarto não tem mais camas livres");
 
     this.name = "NumberOfReservationsExceeded";
   }
