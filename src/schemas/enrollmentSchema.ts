@@ -3,7 +3,12 @@ import joi from "joi";
 export default joi.object({
   name: joi.string().min(3).required(),
   cpf: joi.string().pattern(/^[0-9]|[./-]+$/).length(14).required(),
-  birthday: joi.string().pattern(new RegExp("^([0]?[1-9]|[1|2][0-9]|[3][0|1])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$")).required(),
+  birthday: joi.string()
+    .pattern(new RegExp("^([0]?[1-9]|[1|2][0-9]|[3][0|1])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$"))
+    .required()
+    .messages({
+      "string.base": "\"birthday\" não pode estar vazio",
+    }),
   address: joi.object({
     cep: joi.string().pattern(/^[0-9]|[-]+$/).length(9).required(), 
     street: joi.string().required(),
