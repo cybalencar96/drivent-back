@@ -46,8 +46,8 @@ export async function signIn(email: string, password: string) {
 
   return {
     user: {
-      id: user.id,
-      email: user.email,
+      ...user.structureToClient(),
+      events: user.events.map(event => event.structureToClient()) || [],
       paid: paid,
       enrolled: !!enroll[0],
       reservation: reservationObject,
