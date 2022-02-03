@@ -1,9 +1,9 @@
 export default class FailedSignInError extends Error {
     details: string[] = [];
     constructor() {
-      super("Unauthorized");
+      super("Não autorizado");
 
-      this.details.push("email or password invalid!");
+      this.details.push("E-mail ou senha inválidos!");
       this.name = "UnauthorizedError";
     }
 }

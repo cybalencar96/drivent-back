@@ -2,7 +2,7 @@ import ConflictError from "./ConflictError";
 
 export default class ExistingReservationError extends ConflictError {
   constructor() {
-    super("User has already made a reservation");
+    super("O usuário já fez uma reserva");
 
     this.name = "ExistingReservation";
   }

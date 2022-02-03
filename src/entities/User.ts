@@ -71,7 +71,7 @@ export default class User extends BaseEntity {
 
     return user;
   }
-
+  
   structureToClient() {
     return {
       id: this.id,
@@ -79,4 +79,3 @@ export default class User extends BaseEntity {
     };  
   }
 }
-

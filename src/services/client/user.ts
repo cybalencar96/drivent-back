@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import User from "@/entities/User";
 import Event from "@/entities/Event";
-
 import CannotEnrollBeforeStartDateError from "@/errors/CannotEnrollBeforeStartDate";
 import Setting from "@/entities/Setting";
 import InvalidDataError from "@/errors/InvalidData";

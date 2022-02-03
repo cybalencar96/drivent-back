@@ -34,6 +34,7 @@ export async function signIn(email: string, password: string) {
   });
 
   let reservationsAmount = [];
+
   if (reservation) {
     reservationsAmount = await Reservation.find({
       where: {
