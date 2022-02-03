@@ -7,6 +7,7 @@ import Setting from "@/entities/Setting";
 import InvalidDataError from "@/errors/InvalidData";
 import ConflictError from "@/errors/ConflictError";
 import NumberOfReservationsExceededError from "@/errors/NumberOfReservationsExceeded";
+import { dateOperator } from "@/adapters/DateOperatorAdapter";
 
 export async function createNewUser(email: string, password: string) {
   const settings = await Setting.getEventSettings();
